@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora</title>
+
+    <!-- display -> caixa de texto 
+         operador1 -> número [0-9] ou .
+         operação -> = - * /
+         operador 2 -> número [0-9] ou .
+         = -> calcula o resultado
+         C -> reinicializa a calculadora
+    -->
+
+    <!--
+        BOTÕES
+        C 0 1 2 3 4 5 6 7 8 9 = - * /
+    -->
+    <script>
+
+        var operador1, operador2, operacao, estado;
+        var disp;
+
+        function reset(){
+            operador1 = 0;
+            operador2 = 0;
+            operacao = null;
+            estado = 1;
+            disp.value = "0";
+        }
+
+        function btnClick(objeto){
+            var me = objeto.value;
+
+            if (me == 'C'){
+                reset();
+                return;
+            }
+
+            if (me == '='){
+                var res;
+
+                switch (operacao){
+                case'+':
+                    res = parseFloat(operador1) + parseFloat(operador2);
+                     break;
+                case'-':
+                     res = parseFloat(operador1) - parseFloat(operador2);
+                    break;
+                case'*':
+                    res = parseFloat(operador1) * parseFloat(operador2);
+                    break;
+                case'/':
+                    res = parseFloat(operador1) / parseFloat(operador2);
+                    break;
+                }
+                disp.value = res.toString();
+                estado = 1;
+                return;
+            }
+
+            if((me == '+') || (me == '-') || (me == '*') || (me == '/')){
+                operacao = me;
+                estado = 2;
+                return;
+            }
+
+            if ((me == '.') || (me >= '0') && (me <= '9')){
+                if (estado == 1){
+                    operador1 += me;
+                    disp.value = parseFloat(operador1).toString();
+                }
+               else if (estado == 2){
+                    operador2 += me;
+                    disp.value = parseFloat(operador2).toString(); 
+                }
+            }
+        }
+        function inicializa_pagina() {
+            disp = document.getElementById('display');
+            reset();
+        }
+
+    </script>
+
+</head>
+
+<body onload="inicializa_pagina();">
+    <h1 style="color:blue;"> Calculadora Javascript</h1>
+    <hr />
+    <h1>
+        <form>
+            <input id="display"  style="text-align: right" type="text" value="0" />
+            <table>
+                <tr>
+                    <td><input id="btnClear" type="button" value="C" onclick="btnClick(this);" /></td>
+                </tr>
+                <tr>
+                    <td><input id="btn7" type="button" value="7" onclick="btnClick(this);" /></td>
+                    <td><input id="btn8" type="button" value="8" onclick="btnClick(this);" /></td>
+                    <td><input id="btn9" type="button" value="9" onclick="btnClick(this);" /></td>
+                    <td><input id="btnSoma" type="button" value="+" onclick="btnClick(this);" /></td>
+                </tr>
+                <tr>
+                    <td><input id="btn4" type="button" value="4" onclick="btnClick(this);" /></td>
+                    <td><input id="btn5" type="button" value="5" onclick="btnClick(this);" /></td>
+                    <td><input id="btn6" type="button" value="6" onclick="btnClick(this);" /></td>
+                    <td><input id="btnSub" type="button" value="-" onclick="btnClick(this);" /></td>
+                </tr>
+                <tr>
+                    <td><input id="btn1" type="button" value="1" onclick="btnClick(this);" /></td>
+                    <td><input id="btn2" type="button" value="2" onclick="btnClick(this);" /></td>
+                    <td><input id="btn3" type="button" value="3" onclick="btnClick(this);" /></td>
+                    <td><input id="btnMul" type="button" value="*" onclick="btnClick(this);" /></td>
+                </tr>
+                <tr>
+                    <td><input id="btn0" type="button" value="0" onclick="btnClick(this);" /></td>
+                    <td><input id="btnPonto" type="button" value="." onclick="btnClick(this);" /></td>
+                    <td><input id="btnIgual" type="button" value="=" onclick="btnClick(this);" /></td>
+                    <td><input id="btnDiv" type="button" value="/" onclick="btnClick(this);" /></td>
+                </tr>
+            </table>
+        </form>
+    </h1>
+</body>
+
+</html>
